@@ -1,0 +1,12 @@
+###descargar una base de datos de manera temporal
+temporal <- tempfile()
+#### descarga desde la liga
+download.file("http://www.beta.inegi.org.mx/contenidos/proyectos/enchogares/modulos/enilems/2012/microdatos/enilems12_bd_dbf.zip", temporal)
+###descomprimir la base
+files=unzip(temporal, list = TRUE)$Name
+#descomprimir en formato dbf
+unzip(temporal, files = files[grepl("dbf",files)])
+###instalar paqueteria FOREING
+install.packages("foreign")
+require(foreign)
+ENILEMS<-data.frame(read.dbf("cbasico.dbf"))
