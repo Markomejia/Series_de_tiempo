@@ -1,0 +1,39 @@
+#En este ejemplo vamos a proponer la población en Méxcio que valor minimo seran 100,
+# max 120, 15 datos que inicie en 2000 a 2015
+
+poblacion<-sample (100:120, 15, replace=F)
+
+#se convertira en serie de tempo de la siguiente manera la frecuencia es 
+# 1 por que es anual 
+pobl <- ts(poblacion, frequency = 1, start = (2000))
+#cuando termina la serie
+end(pobl)
+#cuando comienza 
+start(pobl)
+
+#grafica
+plot(pobl)
+plot(aggregate(pobl))
+
+
+
+#ejercicio
+# descargar del inegi la ocupacion de las personas
+# impoirtar base de datos se copia la ubicacion despues \\ y se le agrega el nombre del documento 
+# seguido de su formato
+
+lab <- ts(read.csv(("C:\\Users\\SALA-D24\\Downloads\\IndicadoresENOE_2017-02-08.xls")))
+
+### correccion
+lab2 <- ts(read.csv(("C:\\Users\\SALA-D24\\Downloads\\en.csv")),frequency = 4, start = (2005) )
+
+#10.2, 10.7, 10.5 y 10.3 separar cuatro series de tiempo de una base de datos 
+cuatro <- (read.csv(("C:\\Users\\SALA-D24\\Downloads\\nu.csv")))
+
+des10.2st <- ts(cuatro[,1], frequency = 4, start = 2005, end = 2016)
+
+ocu10.3st <- ts(cuatro[,2], frequency = 4, start = 2005, end = 2016)
+
+tr10.5st <- ts(cuatro[,3], frequency = 4, start = 2005, end = 2016)
+
+con10.7st <- ts(cuatro[,4], frequency = 4, start = 2005, end = 2016)
