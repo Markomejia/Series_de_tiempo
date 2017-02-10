@@ -1,0 +1,63 @@
+#ejercicio
+#objeto 1 numero de profesionistas (mil) rango de 5 a 8
+#objeto 2 crecimiento del pib rango de 0 a 5
+#objeto 3 % de ocupados rango de 40 a 60
+#objeto 4 % de desocupados rango de 3 a 8
+pro <- sample (5:8, 60, replace = TRUE)
+pib <- sample (0:5, 60, replace = TRUE)
+ocu <- sample (40:60, 60, replace = TRUE)
+des <- sample (3:8, 60, replace = TRUE)
+
+#generar un data frame con los objetos
+bs <- data.frame(pro, pib, ocu, des)
+
+#mostrar en la consola los primero 12 datos y los ultimos 12 
+bs[1:12, ]
+bs[49:60, ]
+
+
+#creamos una base con datos especificos
+bs1 <- bs[1:12, ]
+
+
+#convertir los objetos es series de tiempo que comienze en 2010 y datos mensuales
+
+prost <- ts(pro,frequency = 12, start = (2010) )
+pibst <- ts(pib,frequency = 12, start = (2010) )
+ocust <- ts(ocu,frequency = 12, start = (2010) )
+desst <- ts(des,frequency = 12, start = (2010) )
+
+end(prost)
+end(pibst)
+end(ocust)
+end(desst)
+
+# graficar los profesionistas y ocupados en la misma imagen
+plot(cbind(prost,ocust))
+
+#graficar pib y desocupados en la misma imagen
+plot(cbind(pibst,desst))
+
+#graficar todas juntas
+plot(cbind(prost,ocust,pibst,desst))
+
+#graficar de una base como serie de tiempo
+bs2 <- ts(bs,frequency = 12, start = (2010) )
+plot.ts (bs2 [,c(1,3)])
+
+
+
+#ejercicio
+
+pibmx <-data.frame (read.csv(("C:\\Users\\SALA-D24\\Downloads\\Mex.csv")))
+
+st80a90 <- ts(pibmx,frequency = 1, start = 1980, end = 1990)
+st91a00 <- ts(pibmx,frequency = 1, start = 1991, end = 2000)
+st01a10 <- ts(pibmx,frequency = 1, start = 2001, end = 2010)
+st11a15 <- ts(pibmx,frequency = 1, start = 2011, end = 2015)
+
+plot(cbind(st91a00,st01a10))
+
+plot(cbind(st91a,st11a15))
+
+
