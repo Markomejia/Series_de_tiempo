@@ -58,6 +58,6 @@ st11a15 <- ts(pibmx,frequency = 1, start = 2011, end = 2015)
 
 plot(cbind(st91a00,st01a10))
 
-plot(cbind(st91a,st11a15))
+plot(cbind(st01a10,st11a15))
 
 
