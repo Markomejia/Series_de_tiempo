@@ -1,0 +1,55 @@
+##Serie de tiempo multiple
+pro <- sample (5:8, 60, replace = TRUE)
+pib <- sample (0:5, 60, replace = TRUE)
+ocu <- sample (40:60, 60, replace = TRUE)
+des <- sample (3:8, 60, replace = TRUE)
+
+prost <- ts(pro,frequency = 12, start = (2010) )
+pibst <- ts(pib,frequency = 12, start = (2010) )
+ocust <- ts(ocu,frequency = 12, start = (2010) )
+desst <- ts(des,frequency = 12, start = (2010) )
+
+#crear una serie multiple con varias series
+
+seriemultiple <- ts.intersect(prost,pibst,ocust,desst)
+
+#graficar la serie de tiempo
+
+plot(seriemultiple, type = "overplotted", pch = 100,main = "serie de tiempo multiple", xlab= "Años", ylab= "Numerode personas", col = "green")
+
+#generar una serie de tiempo
+
+seriemultiple10a12 <- window(seriemultiple, start=c(2010,1), end=c(2012,1))
+seriemultiple12a14 <- window(seriemultiple, start=c(2012,2), end=c(2014,12))
+plot(seriemultiple10a12, type = "overplotted", pch = 100,main = "serie de tiempo multiple", xlab= "Años", ylab= "Numerode personas", col = "green")
+plot(seriemultiple12a14, type = "overplotted", pch = 100,main = "serie de tiempo multiple", xlab= "Años", ylab= "Numerode personas", col = "green")
+
+#### ejercicio
+#descragar una base de datos
+bs <-data.frame (read.csv(("C:\\Users\\SALA-D24\\Downloads\\ej.csv")))
+#crear con las variales 4 series de tiempo
+minst <- ts(bs[,1], frequency = 4, start = 2005, end = 2016)
+temst <- ts(bs[,2], frequency = 4, start = 2005, end = 2016)
+asast <- ts(bs[,3], frequency = 4, start = 2005, end = 2016)
+subst <- ts(bs[,4], frequency = 4, start = 2005, end = 2016)
+#crear una serie multiple
+seriemultiple1 <- ts.intersect(minst,temst,asast,subst)
+#graficar la serie multiple
+plot(seriemultiple1, type = "overplotted", pch = 13,
+     main = "serie de tiempo multiple", xlab= "Años",
+     ylab= "Numerode personas", col = "dark red")
+#crear 3 grupos de la serie multiple 
+st1 <- ts(seriemultiple1,frequency = 4, start = 2005, end = 2009)
+st2 <- ts(seriemultiple1,frequency = 4, start = 2009, end =2013 )
+st3 <- ts(seriemultiple1,frequency = 4, start = 2013, end = 2016)
+#graficar cada serie de tiempo
+plot(st1, type = "overplotted", pch = 1,
+     main = "serie de tiempo multiple", xlab= "Años",
+     ylab= "Numerode personas", col = "red")
+plot(st2, type = "overplotted", pch = 30,
+     main = "serie de tiempo multiple", xlab= "Años",
+     ylab= "Numerode personas", col = "blue")
+plot(st3, type = "overplotted", pch = 90,
+     main = "serie de tiempo multiple", xlab= "Años",
+     ylab= "Numerode personas", col = "orange")
+
