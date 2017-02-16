@@ -1,0 +1,2 @@
+bs <- ts(read.csv(("C:\\Users\\PC7736-R98\\Downloads\\tabla.xls")))
+plot(bs)
