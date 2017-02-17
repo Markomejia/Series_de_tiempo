@@ -1,0 +1,54 @@
+#descomponer una serie de tiempo graficamente tendencia, estacionalidad y aleatoriedad 
+#se utilizara una funciónb llaada decompose
+
+bs<-sample(3:8,44,remplance=T)
+st<-ts(bs, frequency = 4, start = 2005)
+
+plot(decompose(st))
+
+#######ejercicio 1
+
+bs1 <- (read.csv(("C:\\Users\\SALA-D24\\Downloads\\TIIE2015.csv")))
+
+st1<-ts(bs1, frequency = 52, start = 2005)
+
+plot(decompose(st1))
+
+bs2 <- (read.csv(("C:\\Users\\SALA-D24\\Downloads\\PIB México.csv")))
+
+st2<-ts(bs2, frequency = 4, start = 2005)
+
+plot(decompose(st2))
+
+#descomponer la st
+desst2<-decompose(st2)
+#que datos tiene mi serie de tiempo
+names(desst2)
+
+################## ejercicio 2
+
+#llamar base de datos y crear una serie de tiempo
+desocu <- (read.csv(("C:\\Users\\SALA-D24\\Downloads\\tarea2.csv")))
+
+desocust<-ts(desocu, frequency = 4, start = 2005)
+
+##graficar
+plot(decompose(desocust))
+
+#llamar cada componente
+dedesocust <-decompose(desocust) 
+names(dedesocust)
+
+dedesocust$seasonal
+dedesocust$trend
+dedesocust$random
+dedesocust$figure
+dedesocust$type
+
+### analisis
+#la tasa de desocupasion tenia variaciones un poco constantes hasta el 2008
+#cuando surgio la crisis despues de eso se observa que la tendencia se elevo
+#significantemente por lo que muchas personas perdieron sus trabajos y llega un
+#pnto del 2010 donde se logra estabilizar y de ahi tiene solo pequeñas variaciones
+#significativas
+
