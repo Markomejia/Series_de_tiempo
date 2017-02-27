@@ -1,0 +1,16 @@
+####TENDENCIA####
+td<-ts(read.csv("C:\\Users\\SALA-D24\\Downloads\\tarea2.csv"),frequency = 4,start = (2005))
+dets<-decompose(td, type = "multiplicative")
+dets$trend
+dets$seasonal
+plot(td,col="blue",main="Tasa de desocupación trimestral", ylab="tasas", xlab="años")
+lines(dets$trend, col="red",ylab="Tendencia")
+
+####ESTACIONARIEDAD####
+monthplot(dets$seasonal, main="IVEc", ylab = "ivec trimestral")
+
+####TAREA####
+#1. Encontrar un st con tendencia a la alza y
+#la estacionariedad también se incrementa
+#2. Aplicar modelo multiplicativo
+#3. Graficar tendencia
