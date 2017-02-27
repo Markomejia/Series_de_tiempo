@@ -1,0 +1,7 @@
+peso <- ts (read.csv ("C:\\Users\\SALA-D24\\Downloads\\serie peso.csv"), frequency= 360,start=(2016)) 
+detspeso <-decompose (peso, type="multiplicative") 
+detspeso $trend 
+detspeso $seasonal 
+plot (peso, col="blue",main="Relación peso-dólar",ylab="precio",xlab="años") 
+lines(detspeso$trend, col="red", ylab="Tendencia ") 
+monthplot (detspeso$seasonal, main="ivec", ylab="ivec")
