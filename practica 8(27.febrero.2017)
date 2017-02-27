@@ -1,0 +1,62 @@
+###Descomposición clásica###
+#Se utiliza la fn. descompose
+#Otro tipo de descomposición de la estacionariedad,
+#tendencia y estacionariedad es la descomposición
+#por Loess la cual esta basada en un algoritmo que permite
+#descomponer las series de tiempo en 3 elementos: estacionariedad,
+#tendencia y aleatoriedad, una de las ventajas de esta descomposición
+#es el cálculo de la estacionariedad que se obtienen valores de 
+#estacionariedad no constantes, en contraste con el método clásico de 
+#descomposición
+
+
+
+###descomposición clasica
+#se utiliza la función descompose por ejemplo
+
+#cargamos la srie de tiempo se especifica [1:48,1] para hacerla univariada
+td<-ts(read.csv("C:\\Users\\SALA-D24\\Downloads\\tarea2.csv") [1:48,1],frequency = 4,start = (2005))
+
+class(ts)
+# descomponemos a la serie
+des<-decompose(td)
+#guardamos la tendencia por separado
+tendencia<-des$trend
+#graficamos la tendencia
+plot(tendencia, col="red", main="tendencia de desocupación", ylab="tasas", xlab="años")
+
+#### descomposición tendencia, estacional por Loose
+#se utiliza la función stl() solo acepta series univariadas
+tendencia1<- stl(td, s.window = "periodic", robust = T)
+names(tendencia1)
+tendencia1
+####extraer la tendencia de stl
+tendencia2 <- tendencia1$time.series [,2]
+tendencia2
+### hacemos una grafica encima de la que ya tenemos
+lines(tendencia2,col="blue")
+### descomponer la estacionalidad
+estacionalidad<-tendencia1$time.series[,1]
+
+############# ejercicio #############################
+pib<-ts(read.csv("C:\\Users\\SALA-D24\\Downloads\\Pib.csv") [1:36,1],frequency = 4,start = (2007))
+#clasica
+des<-decompose(pib)
+tendencia<-des$trend
+plot(tendencia, col="red", main="tendencia del pib", ylab="tasas", xlab="años")
+#Loose
+tendencia1<- stl(pib, s.window = "periodic", robust = T)
+tendencia1
+####extraer la tendencia de stl
+tendencia2 <- tendencia1$time.series [,2]
+tendencia2
+lines(tendencia2,col="blue")
+###########################################################
+install.packages("fpp")
+require(fpp)
+#ajustar la estacionalidad
+ajus<- seasdj (tendencia1)
+
+#pronostico metodo ingenuo
+inge1 <- navie (ajus)
+plot(inge1)
