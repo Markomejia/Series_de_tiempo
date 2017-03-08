@@ -1,0 +1,31 @@
+## descomponer una serie de tiempo por modelo multiplicaivo
+des<-data.frame(read.csv("C:\\Users\\SALA-D24\\Downloads\\tarea2.csv"))
+dests<-ts(des, frequency = 4, start = 2005)
+destsd<- decompose(dests)
+destsdmul <- decompose(dests, type = "mult")
+####graficamos los modelos
+plot(destsd)
+plot(destsdmul)
+
+##desestacionalizar una serie
+#se desstacionaliza por diversas razones
+#entre las mas importantes son
+#predecir con mayor precision
+#sin contar con factores externos de nuestros datos
+# dos formas de eliminar la estacionalidad
+
+install.packages("fpp")
+require fpp
+eeadj<-seasadj(destsd)
+eeadj
+plot(eeadj)
+sinesta<-dests - destsd$seasonal
+sinesta
+plot(sinesta)
+
+#ver diferencias
+plot(dests)
+lines(eeadj, col="blue")
+
+#verificar se restan los dos metodo y tiene que dar una matriz de 0's
+eeadj - sinesta
