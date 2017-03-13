@@ -1,0 +1,91 @@
+Una serie de tiempo se considera un caso particular de un proceso estocastico.
+
+En términos generales un proceso estocastico se define como una serie de datos que presentan cambios a través del tiempo.
+
+Análisis de la estacionalidad:
+Supesto: considerese que el proceso estocastico ha generado un proceso estacionario
+
+La estacionariedad se presenta en dos formas:
+
+1.Estacionariedad en sentido estricto se prodce cuando la función de distribución de un proceso estocastico -> F(y)=F(y_(t+k)) 
+permanece invariantemente respecto al tiempo
+
+2.Estacionariedad en sentido amplio se produce cuando la función de distribución del proceso permanece invariantemente 
+respecto al tiempo en sus primeros 2 momentos 
+
+La estacionariedad en sentido amplio es la que se utiliza con mayor frecuencia
+
+-La estacionariedad en el primer momento se refiere cuando todas las variables aleatorias que define el proceso estocastico
+tienen la misma distribución y la misma media. Es decir E(y_t) = M para toda t
+
+-Estacionariedad en el segundo momento se refiere cuando todas las variables tienen las mismas varianzas y ademas la covarianza
+entre 2 variables cualesquiera no depende del tiempo , sino que depende del desface entre ellas.
+
+Por ejemplo
+la Cov(y_1y_2)=Cov(y_5y_6)
+
+En general el desfase o retraso k tiene que cumplir lo siguiente:
+
+cuando k=0,  Var(y_t)=Y_0 para toda t
+k=1,  Var(y_ty_t-1)=Y_1 para toda t
+k=2,  Var(y_ty_t-2)=Y_2 para toda t
+
+Bajo este supuesto la matriz de varianza y covarianza del proceso vendra dada por:
+
+Y_0  Y_1 .................Y_n-1
+Y_1  Y_0Y_1...............Y_n-2
+...............................
+...............................
+...............................
+...............................
+Y_n-1Y_n-2.................Y_0
+
+Supuesto: Ergodicidad en el segundo momento .Se supone que si nb es suficientemente grande (con suficientes observaciones) no será
+necesario estimar los n componentes de la función de autocovarianzas Y_0,Y_1,......,Y_n-1
+
+Es decir a partir de un cierto retardo , k=s los restantes autocovarianzas serán nulas, Y_s+1=Y_s+2=Y_n-1=0 de esta forma
+si s es pequeño en comparaci+on con n solo habra de estimar Y_0,Y_1,...Y_s y M
+
+Este supuesto consiste que en un proceso estocastico la influencia de una variable aleatoria sobre otra muy alejada en el tiempo se
+puede considerar nula.La justificación se busca en la dependencia temporal. Aunque las variables aleatorias que componen un proceso estocastico sean distintas
+las caracteristicas que resumen esas variables aleatorias en momentos proximos del tiempo se espera que sean similares.
+
+Por ejemplo
+Lacovarianza entre dos variables el pib de octubre y noviembre de 2006 es de esperar que sea distinta de cero, debido a que entre esas fechas
+la situación economica tiene pocos cambiso
+En contraste, si tenemos los datos del Pib  de enero de 2007 y julio de 2015 es de suponer que existe poca relación, por lo que esperamos una covarianza
+nula
+
+Por lo tanto, se supondra que una serie de tiempo generada por un proceso estocastico cuando:
+
+1.La función de distribución esta caracterizada por sus 2 primeros momentos
+2.Son estacionarios en 2 primero momentos
+3.Son ergodicos
+
+La familia de los procesos estocasticos que cumplen esas 3 propiedades y que son lineales son:
+1.Procesos autoregresivos(AR)
+2.Procesos medias moviles(MA)
+3.Procesos mixtos(ARMA)
+
+En resumen se define un proceso estocastico estacionario con base en 2 elementos
+
+1.Media y su varianza constantes en el tiempo
+2.Covarianza entre 2 periodos depende del retraso o desfase entre este periodo (ergodico)
+
+Entonces
+Sea y_t una serie de tiempo
+
+1.E(y_t)=E(y_t+k)=M -> media
+2.V(y_t)=V(y_t+k)=Sigma^2 -> Varianza
+3.Y_k=E[(y_t-M)(y_t+k-M)]
+
+Y_k es la covarianza entre y_t y y_t+k
+
+Recordando:
+Covarianza y correlación son medidas que generan el grado de relación lineal entre 2 variables
+
+Autocovarianza y Autocorrelación son medidas de relación lineal entre los valores retardados de una serie de tiempo.
+
+
+
+
