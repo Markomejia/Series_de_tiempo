@@ -1,0 +1,50 @@
+
+des<- read.csv("C:\\Users\\SALA-D23\\Downloads\\tarea2.csv")
+dests<-ts(des)
+
+##metodo de la deriva
+#el metodo consiste en que el pronostico puede incrementar o reducirse sobre el tiempo
+#dependiento del promedio de cambio de las series de tiempo
+rwf(dests, h = 4, drift=TRUE)
+
+#generar cuatro modelos
+#metodo de promedio
+mod1<- meanf(dests,h=10)
+#
+mod2<-naive(dests,h=10)
+#
+mod3<-snaive(dests,h=10)
+#
+mod4<-rwf(dests, h = 10, drift=TRUE)
+
+##graficar
+x11()
+plot(mod1, main = "desocupación trimestral")
+lines(mod2$mean,col=5)
+lines(mod3$mean,col=6)
+lines(mod4$mean,col=7)
+legend("topright", lty = 1,col = c(5,6,7,8),legend = c("media","ingenuo","ingenuo estacional","derivada"))
+
+names(mod2)
+
+#ajustada
+
+x11()
+plot(mod1, main = "desocupación trimestral")
+lines(mod2$fitted,col=5)
+lines(mod3$fitted,col=6)
+lines(mod4$fitted,col=7)
+legend("topright", lty = 1,col = c(5,6,7,8),legend = c("media","ingenuo","ingenuo estacional","derivada"))
+
+
+#residuales
+
+x11()
+plot(mod1, main = "desocupación trimestral")
+lines(mod2$residuals,col=5)
+lines(mod3$residuals,col=6)
+lines(mod4$residuals,col=7)
+legend("topright", lty = 1,col = c(5,6,7,8),legend = c("media","ingenuo","ingenuo estacional","derivada"))
+
+
+
