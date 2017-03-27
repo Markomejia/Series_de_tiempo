@@ -1,0 +1,12 @@
+Método de suavizamiento exponencial simple (SES)
+
+El metodo de pronostico más sencillo de suavizado es el exponencial simple y se utiliza para pronosticar series de tiempo 
+sin tendencia o estacionalidad. 
+
+La idea de este metodo es otorgar una mayor ponderación a los datos de más actualesde la serie de tiempo. Los pronosticos
+se calculan utilizando promedios ponderados donde las ponderaciones se reducen exponencialmente a medida que las observaciones
+son más lejaas.
+
+y^_T+1|T=alfay_T+alfa(1-alfa)y_T-1+alfa(1-alfa)^2 y_t-2+......
+donde el parametro esta entre 0, 1 donde la ST es y_1,y_2,.....y_I
+
