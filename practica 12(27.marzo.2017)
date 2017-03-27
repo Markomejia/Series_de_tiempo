@@ -1,0 +1,41 @@
+#importar un archivo csv
+as <- read.csv("C:\\Users\\SALA-D24\\Downloads\\asalariados.csv")
+
+#como solo me interesa el renglo 7 se hace lo siguiente
+as1<- data.frame(read.csv("C:\\Users\\SALA-D24\\Downloads\\asalariados.csv", header = T)[7, 2:49])
+
+#convertirla en una serie de tiempo como es una fila hay que transponer 
+astrans<-t(as1)
+
+#hacer una serie de tiempo
+ts<-ts(astrans,start = 2005,frequency = 4)
+
+#es un problema ya que son variable de tipo caracter por lo que las hacemos numericas
+ts1 <- as.numeric(ts)
+
+#ahora bien se puede declarar sin ningun problema la serie de tiempo
+asts <- ts(ts1)
+
+########################suavizado exponencial utilizar la libreria forecast#######################
+
+mod <- ses(asts, alpha = 0.1, initial = "simple", h=8)
+mod1 <- ses(asts, alpha = 0.3, initial = "simple", h=8)
+mod2 <- ses(asts, alpha = 0.95,initial = "simple", h=8)
+
+#graficamos
+x11()
+
+plot(mod, ylab = "asalariados", xlab = "aA+-o", main = "asalariados", type = "o")
+
+lines(mod$fitted,col="brown", type="o")
+lines(mod1$fitted,col="red", type="o")
+lines(mod2$fitted,col="green", type="o")
+
+lines(mod$mean,col="brown", type="o")
+lines(mod1$mean,col="red", type="o")
+lines(mod2$mean,col="green", type="o")
+
+legend("topleft",lty = 1,col=c(1,"brown","red","green"), 
+       c("dat", expression(alpha==0.1),expression(alpha==0.3)
+         , expression(alpha==.95)),pch=11)
+
