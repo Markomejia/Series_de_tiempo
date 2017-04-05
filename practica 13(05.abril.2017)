@@ -1,0 +1,41 @@
+coe2<-read.dbf("C:\\Users\\SALA-D24\\Downloads\\2016trim1_dbf\\coe2t116.dbf")
+#confirma que se encuentra la variable p6d solicitar lista de variable
+ls(coe2)
+
+#pasar la variable requerida a numerica
+coe2$P6D<- as.numeric(as.character(coe2$P6D))
+
+#extraer los que tienen seguridad social P6D = 1 a 5  
+coe2s <- subset(coe2, coe2$P6D == 1|coe2$P6D == 2|coe2$P6D == 3|coe2$P6D == 4|coe2$P6D == 5)
+
+#generar una nueva variable
+coe2$sinseg<-ifelse(coe2$P6D >= 1 & coe2$P6D <= 5, 1,
+                    ifelse(coe2$P6D >= 6 & coe2$P6D <=9, 2, 0 ))
+
+table(coe2$sinseg)
+
+############################### EJERCICIO####################################
+#Hacer la variable de desocupados
+coe1<-read.dbf("C:\\Users\\SALA-D24\\Downloads\\2016trim1_dbf\\coe1t116.dbf")
+
+coe1$P1C<- as.numeric(as.character(coe1$P1C))
+coe1$P1B<- as.numeric(as.character(coe1$P1B))
+coe1$P2_1<- as.numeric(as.character(coe1$P2_1))
+coe1$P2_2<- as.numeric(as.character(coe1$P2_2))
+coe1$P2_3<- as.numeric(as.character(coe1$P2_3))
+coe1$P2B<- as.numeric(as.character(coe1$P2B))
+coe1$P2C<- as.numeric(as.character(coe1$P2C))
+coe1$P1D<- as.numeric(as.character(coe1$P1D))
+
+
+coe1$desoc<-ifelse(coe1$P1C == 11, 1, 
+            ifelse(coe1$P1B==2 & (coe1$P2_1==1 | coe1$P2_2==2 | coe1$P2_3==3) & coe1$P2B==1 & (coe1$P2C != 2 | coe1$P2C != 9), 2,
+            ifelse((coe1$P1D==2|coe1$P1D==9) & (coe1$P2_1==1 | coe1$P2_2==2 | coe1$P2_3==3) & coe1$P2B==1 & (coe1$P2C != 2 | coe1$P2C != 9), 3,0))) 
+
+table(coe1$desoc)
+install.packages("questionr")
+require(questionr)
+wtd.table(coe1$desoc, weights = coe1$FAC)
+wtd.table(coe1$P1C, weights = coe1$FAC)
+wtd.table(coe1$P2_1, weights = coe1$FAC)
+wtd.table(coe1$P2_2, weights = coe1$FAC)
