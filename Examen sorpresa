@@ -1,0 +1,68 @@
+# De las acciones de televisa al precio de cierre
+#Ajustar 4 modelos de suavización exponencial simple (Alpha = .2, .4, .6, .8)
+#hacer una sola grafica con los cuatro modelos
+#analizar cual es el mejor modelo
+#una ves decidido el mejor modelo aplicar la evaluación de los ajustes y utilizar las
+#medidas MAE y RMSE extrayendolas de tal forma que creen un vector que compare estas
+#medidas e indicar el mejor alpha
+#identificar la tendencia, estacionalidad y ciclos de la serie de tiempo e interpretar
+
+acciones<-read.csv("C:\\Users\\SALA-D24\\Documents\\acciones televisa.csv")
+acc<-ts(acciones, start = 2016, frequency = 252)
+
+mod  <- ses(acc, alpha = 0.2,initial = "simple", h=8)
+mod1 <- ses(acc, alpha = 0.4,initial = "simple", h=8)
+mod2 <- ses(acc, alpha = 0.6,initial = "simple", h=8)
+mod3 <- ses(acc, alpha = 0.8,initial = "simple", h=8)
+
+x11()
+
+plot(acc, ylab = "acciones", xlab = "televisa", main = "ejercicio", type = "o")
+
+lines(mod$fitted,col="yellow", type="o")
+lines(mod1$fitted,col="red", type="o")
+lines(mod2$fitted,col="green", type="o")
+lines(mod3$fitted,col="blue", type="o")
+
+## el mejor ajuste que se observa garficamente es el modelo con el alpha = .8
+
+m<- acc - mod$fitted
+mm<-mean(abs(m))####MAE
+ms<-sqrt(mean(m^2))########RMSE
+
+m1<- acc - mod1$fitted
+mm1<-mean(abs(m1))####MAE
+ms1<-sqrt(mean(m1^2))########RMSE
+
+m2<- acc - mod2$fitted
+mm2<-mean(abs(m2))####MAE
+ms2<-sqrt(mean(m2^2))########RMSE
+
+m3<- acc - mod3$fitted
+mm3<-mean(abs(m3))####MAE
+ms3<-sqrt(mean(m3^2))########RMSE
+
+mae<-c(mm1,mm2,mm3,mm)
+rmse<-c(ms1,ms2,ms3,ms)
+
+x<-min(mae)
+y<-min(rmse)
+
+mae1<-ifelse(x==mm,  "modelo 1", 
+      ifelse(x==mm1, "modelo 2",
+      ifelse(x==mm2, "modelo 3",
+      ifelse(x==mm3, "modelo 4",0))))
+mae1
+
+rmse1<-ifelse(y==ms,  "modelo 1", 
+      ifelse(y==ms1, "modelo 2",
+      ifelse(y==ms2, "modelo 3",
+      ifelse(y==ms3, "modelo 4",0))))
+rmse1
+      
+x11()
+plot(acc)
+
+#La serie de tiempo no cuenta con tendencia
+#Tampoco se logra observar una estacionariedad clara
+#y se observan una secuencia de ciclos cada dos meses hasta llegar a una caida fuerte a finales del año
