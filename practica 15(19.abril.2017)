@@ -1,0 +1,84 @@
+acciones<-read.csv("C:\\Users\\SALA-D24\\Documents\\acciones televisa.csv")
+acc<-ts(acciones, start = 2016, frequency = 252)
+
+mod  <- ses(acc, alpha = 0.2,initial = "simple", h=8)
+mod1 <- ses(acc, alpha = 0.4,initial = "simple", h=8)
+mod2 <- ses(acc, alpha = 0.6,initial = "simple", h=8)
+mod3 <- ses(acc, alpha = 0.8,initial = "simple", h=8)
+
+###analisis de residuales
+###se observara si los residuales cumplen con lo siguiente:
+#1.Los residuales no estan correlacionados
+#2.Tienen media cero
+#3.Tienen varianza constante
+#4.Estan normalmente distribuidos
+
+#se obtendran residuales de cada modelo para analizar y conocer su comprtamiento
+
+#se tienen que grafiar los datos con los valores ajustados para extraer los residuales
+
+x11()
+plot(mod,ylab = "",xlab = "",main = "",type = "l")
+lines(mod$fitted,col="orange",type="l")
+lines(mod1$fitted,col="blue",type="l")
+lines(mod2$fitted,col="purple",type="l")
+lines(mod3$fitted,col="red",type="l")
+
+#extraer residuales
+
+res<- residuals(mod)
+res1<-residuals(mod1)
+res2<-residuals(mod2)
+res3<-residuals(mod3)
+
+x11()
+plot(res, ylab = "residuales",xlab = "")
+plot(res1, ylab = "residuales",xlab = "")
+plot(res2, ylab = "residuales",xlab = "")
+plot(res3, ylab = "residuales",xlab = "")
+
+#como no existe un patron se cumple el supuesto de independencia
+
+#saber si se distribuyen normal
+hist(res,nclass = "FD",main = "histograma residuales")
+hist(res1,nclass = "FD",main = "histograma residuales")
+hist(res2,nclass = "FD",main = "histograma residuales")
+hist(res3,nclass = "FD",main = "histograma residuales")
+#como su media se encuentra muy cercana a 0 podemos decir que es normal
+
+##prueba de autocorrelación de residuales
+#se utilizara la función acf ademas de esta prueba se realizara una grafica ljung Box
+#con la función Box.test para conocer la correlación a traves de una prueba de hipotesis
+
+acf(res,main="residuales")
+acf(res1,main="residuales 1")
+acf(res2,main="residuales 2")
+acf(res3,main="residuales 3")
+
+#si las líneas se encuentran dentro del rango podemos decir que no existe
+#correlación
+
+
+#ljung Box
+
+Box.test(res,  lag = 10, type = "LJ")
+Box.test(res1, lag = 10, type = "LJ")
+Box.test(res2, lag = 10, type = "LJ")
+Box.test(res3, lag = 10, type = "LJ")
+ 
+#El estadistico Q de ljung box prueba la hipotesis de que las autocrrewlaciones
+#de hasta un desfase k son iguales a cero
+#osea que son aleatorios e independientes hasta un numero de desfases
+# si el valor de LQB es mayor al valor critico especificado las autocorrelaciones
+#para uno o más desfases podrian ser estadisticamente significativas diferentes de cero
+#lo que indicara que los valores no son aleatorios ni independientes
+
+#etapas que se utilizan en el analisis de residuales
+#1.elegir el modelo a traves de las medidas MAE y RMSE
+#2.realizar las pruebas a los residuales de normalidad e independencia
+#y varianza constante una vez que las pruebas son viables ya se puede elegir el modelo
+#como una opción a considerar para realizar los pronosticos necesarios
+
+
+
+
