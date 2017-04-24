@@ -1,0 +1,16 @@
+bs <- read.csv("C:\\Users\\SALA-D24\\Downloads\\pez.csv")
+st<-ts(bs, start = 2014,end = 2015,frequency = 12)
+
+##pronostico por holt winter
+
+holt1 <- hw(st,seasonal = "additive",h=5)
+holt2 <- hw(st,seasonal = "multiplicative",h=5)
+modexp <- holt(st,alpha = .8,beta = .2,initial = "simple",exponential = T,h=5)
+
+
+
+x11()
+plot(st, ylab = " ", xlab = " ", main = "pronosticos", type = "o")
+lines(holt1$fitted,col="blue", type="o")
+lines(holt2$fitted,col="red", type="o")
+lines(modexp$fitted,col="green", type="o")
