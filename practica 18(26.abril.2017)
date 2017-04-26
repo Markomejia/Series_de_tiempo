@@ -1,0 +1,66 @@
+################### Ejercicio en clase ############################# #### utilizar 3 series de tiempo #### serie
+####1) precios diarios del dólar últimos 6 meses 
+#### 2) acciones de ICA diarias cierre de 2016 
+### 3) Últimos 16 años crecimiento (%) del Pib anual 
+### 4) acciones de Bimbo diarias cierre 2016 
+#### 5) una serie que tenga que ver con su trabajo final 
+
+#### 1) obtener las series
+#### 2) convertirlas en series de tiempo y graficarlas
+#### 3) analizar las gráficas y decidir qué modelo usar, modelos simples (media, ingenuo, etc), holt, holt amortiguado, holt Winter
+#### 4) con cada una de las series hacer una comparación de los datos ajustados de los modelos de predicción (elegir 1 modelo de simple, 1 holt, 1 amortiguado y 1 winter), despues analizar cual ajusta mejor y porque ustedes creen que este modelo realiza el mejor ajuste. Apliquen la función accuracy para saber si su análisis grafico coincide con los resultados del accuracy
+#### 5) con cada una de las series hacer una comparación de los datos pronosticados de los modelos de predicción (elegir 1 modelo de simple, 1 holt, 1 amortiguado y 1 winter), despues analizar cual pronostica mejor
+
+#1 y 2
+us<-read.csv("C:\\Users\\SALA-D24\\Downloads\\dolar.csv")[,1]
+usst<-ts(us, start = 2016,frequency = 252)
+plot(usst, ylab= "Dolar", xlab="Tipo de cambio", main="ejercicio",type = "l")
+
+ica<-read.csv("C:\\Users\\SALA-D24\\Documents\\ica.csv")[,1]
+icast<-ts(ica, start = 2016,frequency = 252)
+plot(icast, ylab= "Acciones", xlab="ICA", main="ejercicio")
+
+pib<-read.csv("C:\\Users\\SALA-D24\\Downloads\\PIB16años.csv")[,1]
+pibst<-ts(pib, start = 2016,frequency = 252)
+plot(pibst, ylab =  "Dolar", xlab="Tipo de cambio", main="ejercicio",type = "l")
+
+bi<-read.csv("C:\\Users\\SALA-D24\\Downloads\\Bimbo.csv")[,1]
+bist<-ts(bi, start = 2016,frequency = 252)
+plot(bist, ylab= "Dolar", xlab="Tipo de cambio", main="ejercicio",type = "l")
+
+sp<-read.csv("C:\\Users\\SALA-D24\\Downloads\\S&P.csv")[,1]
+spst<-ts(bi, start = 2016,frequency = 252)
+plot(spst, ylab= "Dolar", xlab="Tipo de cambio", main="ejercicio",type = "l")
+
+#3
+#modelos basicos
+modus1<- meanf(usst,h=10)
+modus2<-naive(usst,h=10)
+modus3<-snaive(usst,h=10)
+modus4<-rwf(usst, h = 10, drift=TRUE)
+#Holt
+hus<- holt(usst,alpha = .8,beta = .2,initial = "simple",h=5)
+#amortiaguados
+expus <- holt(usst,initial = "simple",h=8,exponential = T)
+adius<- holt(usst,damped = T,h = 8)
+mulus <- holt(usst,damped = T,h = 8,exponential = T)
+#Winter
+wus1<- hw(usst,seasonal = "additive",h=5)
+wus2<- hw(usst,seasonal = "multiplicative",h=5)
+#4
+plot(usst, ylab= "Dolar", xlab="Tipo de cambio", main="ejercicio",type = "l")
+lines(modus1$fitted,col="yellow", type="o")
+lines(modus2$fitted,col="red", type="o")
+lines(modus3$fitted,col="orange", type="o")
+lines(modus4$fitted,col="blue", type="o")
+#Modelo de deriva es mejor
+plot(usst, ylab= "Dolar", xlab="Tipo de cambio", main="ejercicio",type = "l")
+lines(expus$fitted,col="yellow", type="o")
+lines(adius$fitted,col="orange", type="o")
+lines(mulus$fitted,col="blue", type="o")
+#Modelo multiplicativo gana
+plot(usst, ylab= "Dolar", xlab="Tipo de cambio", main="ejercicio",type = "l")
+lines(wus1$fitted,col="blue", type="o")
+lines(wus2$fitted,col="orange", type="o")
+#Modelo indistinto
+
