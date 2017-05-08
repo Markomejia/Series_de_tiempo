@@ -1,0 +1,4 @@
+genomalab<-read.csv("C://Users//SALA-D23//Documents//g.csv")
+gts<-ts(genomalab, frequency = 252, start=2016)
+acf(gts)
+plot(gts)
