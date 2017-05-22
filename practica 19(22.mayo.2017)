@@ -1,0 +1,84 @@
+bi<-read.csv("C:\\Users\\SALA-D24\\Downloads\\Bimbo.csv")
+ce<-read.csv("C:\\Users\\SALA-D24\\Downloads\\cemex.csv")
+#comvertir a st
+
+bst<-ts(bi,frequency = 252, start = 2016)
+cst<-ts(ce,frequency = 252, start = 2016)
+##1)observar si la serie es estacional utilizando la prueba de raíz unitaria
+#con la funciónadf.test y esperamos que el p-value sea mayor a .05
+install.packages("foreing")
+require(foreing)
+adf.test(bst)
+adf.test(cst)
+
+# debido a que la serie no es estacional se realiza la primera diferensiación
+#con la función diff
+db<-diff(bst)
+dc<-diff(cst)
+
+#se realiza la prueba de raíz para observar que las st ya son estacionarias
+adf.test(db)
+adf.test(dc)
+
+#p es el valor de los autoregresivos
+
+#número de orden de los promedios moviles
+acf(db)
+acf(dc)
+#determinamos el número de q que se asocia con los modelos de promedis moviles
+#para determinar el valor de p que se relaciona con los modelos autorregresivos
+#se utiliza la función pacf()
+
+pacf(db)
+pacf(dc)
+
+#segun el correlograma de pacf el valor de p es 4
+#por lo quye propóne un modelo arima (4,1,2) (pacf,veces que se hace la diferencsiación,acf)
+#se utiliza la original por que arima ya hace su propia diferensiación
+mob<-Arima(bst, order = c(4,1,2))
+moc<-Arima(cst, order = c(2,1,2))
+mob
+moc
+
+# se propone un nuevo modelo con p+1 y se revisa el valor aicc y el menor sera
+#el mejor modelo con el criterio de aikaike
+mob1<-Arima(bst, order = c(5,1,2))
+moc1<-Arima(cst, order = c(3,1,2))
+mob1
+moc1
+
+#si nos aparece un p-value von un valor grande se sugiere que existe ruio blanco
+mobr<-residuals(mob)
+Box.test(mobr, lag = 12, type = "Ljung-Box")
+mob2<-forecast(mob,h=12)
+plot(forecast(mob2,h=12), include=18)
+mob2
+summary(mob2)
+
+mocr<-residuals(moc)
+Box.test(mocr, lag = 12, type = "Ljung-Box")
+moc2<-forecast(moc,h=12)
+plot(forecast(moc2,h=12), include=18)
+moc2
+summary(moc2)
+
+#función autoarima
+auto.arima(bst)
+auto.arima(cst)
+
+#saber si los residuales tienen ruido blanco
+mobr1<-residuals(mob1)
+Box.test(mobr1, lag = 12, type = "Ljung-Box")
+mob3<-forecast(mob1,h=12)
+plot(forecast(mob3,h=12), include=18)
+mob3
+summary(mob3)
+
+mocr1<-residuals(moc1)
+Box.test(mocr1, lag = 12, type = "Ljung-Box")
+moc3<-forecast(moc1,h=12)
+plot(forecast(moc3,h=12), include=18)
+moc3
+summary(moc3)
+
+
