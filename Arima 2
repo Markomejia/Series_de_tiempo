@@ -33,3 +33,17 @@ yy3<-Arima(cc1, order=c(2,3,2))
 yy3
 #Con este modelo expresamos:
 y´t=.0824(y´t-1)-.1535(y´t-2)-1.9817(et-1)+.9822(et-2)+et
+
+#Modelo ARIMA con acciones de GCARSO modelo ARIMA(2,2,2)
+carso<-read.csv("C://Users//SALA-D24//Downloads//gcarso.csv")
+
+carso1<-ts(carso, frequency = 252, start=2016)
+arima1<-Arima(carso1, order=c(2,2,2))
+arima1
+
+##MODELOS ARIMA con diferenciación
+y´t=c+phi1(Y´t-1)+...+phip(Y´t-p)+teta1(et-1)+...+tetaq(et-q)+et
+
+
+#Con este modelo expresamos:
+y´t=.7299(y´t-1)-.1464(y´t-2)-1.8126(et-1)+.8126(et-2)+et
