@@ -1,4 +1,4 @@
-amx<-read.csv("C://Users//SALA-D23//Downloads//amx.csv")
+amx<-read.csv("C://Users//SALA-D24//Downloads//amx.csv")
 
 cc1<-ts(amx, frequency = 252, start=2016)
 zz<-Arima(cc1, order=c(1,0,0))
